@@ -1,0 +1,32 @@
+{
+  "name": "@villie/mobile",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "dev": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "test": "jest --watchAll",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@villie/shared": "workspace:*",
+    "expo": "^53.0.0",
+    "expo-status-bar": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@types/react": "*",
+    "typescript": "^5.4.0",
+    "jest": "^29.0.0",
+    "@testing-library/react-native": "^13.0.0",
+    "jest-expo": "*"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "setupFilesAfterEachTest": ["@testing-library/react-native/extend-expect"]
+  }
+}
