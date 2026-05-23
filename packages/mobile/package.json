@@ -7,26 +7,48 @@
     "dev": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "test": "jest --watchAll",
+    "test": "jest --watchAll=false",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.106.1",
     "@villie/shared": "workspace:*",
     "expo": "^53.0.0",
     "expo-status-bar": "*",
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "zustand": "^5.0.13"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
-    "@types/react": "*",
-    "typescript": "^5.4.0",
-    "jest": "^29.0.0",
     "@testing-library/react-native": "^13.0.0",
-    "jest-expo": "*"
+    "@types/jest": "^29.5.14",
+    "@types/react": "*",
+    "jest": "^29.0.0",
+    "jest-expo": "~53.0.0",
+    "ts-jest": "^29.4.11",
+    "typescript": "^5.4.0"
   },
   "jest": {
-    "preset": "jest-expo",
-    "setupFilesAfterEachTest": ["@testing-library/react-native/extend-expect"]
+    "projects": [
+      {
+        "displayName": "utils",
+        "preset": "ts-jest",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/src/utils/**/*.test.ts"],
+        "moduleNameMapper": {
+          "^@villie/shared(.*)$": "<rootDir>/../shared/src$1"
+        },
+        "transform": {
+          "^.+\\.tsx?$": ["ts-jest", { "tsconfig": { "strict": true, "esModuleInterop": true } }]
+        }
+      },
+      {
+        "displayName": "components",
+        "preset": "jest-expo",
+        "testMatch": ["<rootDir>/src/components/**/*.test.{ts,tsx}"],
+        "testPathIgnorePatterns": ["/node_modules/", "/src/utils/"]
+      }
+    ]
   }
 }
