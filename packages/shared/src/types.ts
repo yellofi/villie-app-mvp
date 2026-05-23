@@ -28,8 +28,9 @@ export const TARGET_AGE_LABEL: Record<TargetAge, string> = {
 // (원시 좌표는 클라이언트에 절대 노출하지 않는다 - SPEC 제약)
 export function formatDistance(meters: number): string {
   if (meters < 500) return '도보 ' + Math.ceil(meters / 70) + '분'
-  if (meters < 1000) return Math.round(meters / 100) * 100 + 'm'
-  return (meters / 1000).toFixed(1) + 'km'
+  const roundedHundreds = Math.round(meters / 100) // 100m 단위 정수
+  if (roundedHundreds < 10) return roundedHundreds * 100 + 'm'
+  return (roundedHundreds / 10).toFixed(1) + 'km'  // 정수 나눗셈으로 부동소수점 회피
 }
 
 // ─── Entity 타입 (API 응답 기준) ─────────────────
