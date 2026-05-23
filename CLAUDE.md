@@ -5,6 +5,23 @@
 - **Node.js**: pnpm workspaces (monorepo)
 - **Path**: WSL sees Windows path as `/mnt/d/yshwang/workplace/villie-app`
 
+## Key Documents / 핵심 문서
+작업 전 반드시 읽을 것:
+- `SPEC_INIT.md` — 기능 요구사항, 확정 스키마, Decision Log
+- `TECH_STACK.md` — 기술 스택 상세
+- `ROADMAP.md` — Phase 전환 계획 및 모노레포 구조
+
+## Package Manager
+- **pnpm 전용** — `npm install` / `yarn` 사용 금지
+- 워크스페이스 명령: `pnpm --filter <package> <command>`
+
+## Testing Strategy / 테스트 전략
+- **TDD**: 구현 전 테스트 먼저 작성
+- Unit/Component: Jest + React Native Testing Library (co-location: `*.test.tsx`)
+- E2E: Maestro
+- Supabase: unit → mock, integration → Supabase CLI 로컬 인스턴스 사용
+- CI: GitHub Actions (`feature/*` → unit, PR→`dev` → +integration, PR→`main` → +E2E)
+
 ## Temporary & Test Scripts / 임시 스크립트 규칙
 - One-off scripts, test files, and scratch work go in `~/tmp/` (WSL: `/home/yshwang/tmp/`)
 - Never leave test scripts in the project root
