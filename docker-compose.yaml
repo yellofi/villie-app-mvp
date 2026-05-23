@@ -1,0 +1,21 @@
+# 파일명: docker-compose.yml
+# 실행 방법: docker-compose up -d
+
+version: '3.8'
+
+services:
+  villie-db:
+    image: postgis/postgis:15-3.3
+    container_name: villie-postgres
+    environment:
+      POSTGRES_USER: villie_admin
+      POSTGRES_PASSWORD: villie_secure_pass
+      POSTGRES_DB: villie_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - villie_pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  villie_pg_data:
