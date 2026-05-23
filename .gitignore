@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# turbo
+.turbo/
+
+# build
+dist/
+build/
+.expo/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# supabase
+supabase/.branches/
+supabase/.temp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+
+# test
+coverage/
