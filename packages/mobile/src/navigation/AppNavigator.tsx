@@ -1,22 +1,33 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useAuthStore } from '../store/auth.store'
+import type { AuthStackParamList } from './types'
+import { PhoneInputScreen } from '../screens/auth/PhoneInputScreen'
+import { OtpVerifyScreen } from '../screens/auth/OtpVerifyScreen'
+import { RoleSelectScreen } from '../screens/auth/RoleSelectScreen'
 
-// TODO: 실제 네비게이션 라이브러리 설치 후 교체
+// Placeholder for main tab navigator (Phase 2)
+import { View, Text } from 'react-native'
+function MainPlaceholder() {
+  return (
+    <View className="flex-1 items-center justify-center bg-white">
+      <Text className="text-lg font-semibold">메인 앱 (준비 중)</Text>
+    </View>
+  )
+}
+
+const AuthStack = createNativeStackNavigator<AuthStackParamList>()
+
 export function AppNavigator() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
 
-  if (!isAuthenticated) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Auth Flow (준비 중)</Text>
-      </View>
-    )
-  }
+  if (isAuthenticated) return <MainPlaceholder />
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Main App (준비 중)</Text>
-    </View>
+    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+      <AuthStack.Screen name="PhoneInput" component={PhoneInputScreen} />
+      <AuthStack.Screen name="OtpVerify" component={OtpVerifyScreen} />
+      <AuthStack.Screen name="RoleSelect" component={RoleSelectScreen} />
+    </AuthStack.Navigator>
   )
 }
