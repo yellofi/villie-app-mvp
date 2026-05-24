@@ -43,6 +43,7 @@
   1. `dev`에서 `feature/*` 브랜치 분기
   2. 작업 완료 후 `feature/*` → `dev` PR
   3. `dev` 안정화 후 `dev` → `main` PR
+- **PR 생성 시 반드시 base 명시** — `gh pr create --base dev` (생략 시 main으로 직행)
 - **커밋 컨벤션**: `feat:`, `fix:`, `chore:`, `test:`, `docs:` 프리픽스 사용
 - **GitHub Actions 트리거**
   - `feature/*` push → unit test
