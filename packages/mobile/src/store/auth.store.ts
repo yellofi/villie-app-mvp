@@ -13,6 +13,8 @@ interface AuthState {
   // 액션
   setPhone: (phone: string) => void
   setUserType: (type: UserType) => void
+  // Supabase onAuthStateChange 연결 시 호출 — 세션 획득 후 isAuthenticated: true
+  setAuthenticated: (userId: string) => void
   reset: () => void
 }
 
@@ -30,5 +32,6 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   setPhone: (phone) => set({ phone }),
   setUserType: (userType) => set({ userType }),
+  setAuthenticated: (userId) => set({ isAuthenticated: true, userId }),
   reset: () => set(initialState),
 }))

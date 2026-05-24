@@ -6,6 +6,7 @@ import type { RouteProp } from '@react-navigation/native'
 import type { AuthStackParamList } from '../../navigation/types'
 import { normalizePhone } from '../../utils/phone'
 import { supabase } from '../../lib/supabase'
+import { useAuthStore } from '../../store/auth.store'
 
 type NavProp = NativeStackNavigationProp<AuthStackParamList, 'OtpVerify'>
 type OtpRoute = RouteProp<AuthStackParamList, 'OtpVerify'>
@@ -14,6 +15,7 @@ export function OtpVerifyScreen() {
   const navigation = useNavigation<NavProp>()
   const route = useRoute<OtpRoute>()
   const { phone } = route.params
+  const { setAuthenticated } = useAuthStore()
 
   const [otp, setOtp] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -38,6 +40,11 @@ export function OtpVerifyScreen() {
       setError(verifyError.message)
       return
     }
+
+    // TODO(Supabase): onAuthStateChange로 자동 처리 예정
+    // 지금은 verifyOtp 응답에서 직접 userId 추출
+    // const userId = data?.session?.user?.id ?? ''
+    // setAuthenticated(userId)
 
     navigation.navigate('RoleSelect')
   }

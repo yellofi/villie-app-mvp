@@ -5,6 +5,7 @@ import type { AuthStackParamList } from './types'
 import { PhoneInputScreen } from '../screens/auth/PhoneInputScreen'
 import { OtpVerifyScreen } from '../screens/auth/OtpVerifyScreen'
 import { RoleSelectScreen } from '../screens/auth/RoleSelectScreen'
+import { LocationVerifyScreen } from '../screens/auth/LocationVerifyScreen'
 
 // Placeholder for main tab navigator (Phase 2)
 import { View, Text } from 'react-native'
@@ -28,6 +29,7 @@ export function AppNavigator() {
       <AuthStack.Screen name="PhoneInput" component={PhoneInputScreen} />
       <AuthStack.Screen name="OtpVerify" component={OtpVerifyScreen} />
       <AuthStack.Screen name="RoleSelect" component={RoleSelectScreen} />
+      <AuthStack.Screen name="LocationVerify" component={LocationVerifyScreen} />
     </AuthStack.Navigator>
   )
 }
