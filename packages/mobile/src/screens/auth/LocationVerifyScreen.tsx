@@ -4,13 +4,14 @@ import { useNavigation } from '@react-navigation/native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import type { AuthStackParamList } from '../../navigation/types'
 import { useAuthStore } from '../../store/auth.store'
+import { supabase } from '../../lib/supabase'
 
 type NavProp = NativeStackNavigationProp<AuthStackParamList, 'LocationVerify'>
 
 /**
  * 동네 인증 화면 — Phase 1 placeholder
  *
- * TODO(Supabase): 실제 구현 시
+ * TODO(TD-03): 실제 구현 시
  * 1. 카카오 주소 검색 API 또는 GPS → b_code 추출
  * 2. user_locations 테이블 upsert
  * 3. setAuthenticated(userId) 호출 → 메인 앱 진입
@@ -19,10 +20,11 @@ export function LocationVerifyScreen() {
   const navigation = useNavigation<NavProp>()
   const { setAuthenticated, userId } = useAuthStore()
 
-  const handleSkip = () => {
-    // 개발 중 임시: 동네 인증 스킵하고 메인 진입
-    // Supabase 연결 후에는 실제 userId로 교체
-    setAuthenticated(userId ?? 'dev-user')
+  const handleSkip = async () => {
+    // 현재 Supabase 세션에서 userId 추출 (우선순위: 세션 > 스토어 > dev-user)
+    const { data: { session } } = await supabase.auth.getSession()
+    const resolvedId = session?.user?.id ?? userId ?? 'dev-user'
+    setAuthenticated(resolvedId)
   }
 
   return (

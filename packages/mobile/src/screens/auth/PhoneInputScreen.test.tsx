@@ -98,8 +98,9 @@ describe('PhoneInputScreen', () => {
     })
   })
 
-  it('navigates to OtpVerify after successful OTP send', async () => {
-    mockSignInWithOtp.mockResolvedValueOnce({ data: {}, error: null })
+  it('[Option A] signInWithOtp 성공 시 OtpVerify로 이동한다 (session 없음)', async () => {
+    // Enable phone confirmations = ON: session이 null → OTP 입력 화면으로
+    mockSignInWithOtp.mockResolvedValueOnce({ data: { session: null }, error: null })
 
     render(<PhoneInputScreen />)
 
@@ -108,6 +109,23 @@ describe('PhoneInputScreen', () => {
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith('OtpVerify', { phone: '010-1234-5678' })
+    })
+  })
+
+  it('[Option B] signInWithOtp가 session을 즉시 반환하면 RoleSelect로 이동한다', async () => {
+    // Enable phone confirmations = OFF: session 즉시 반환 → OTP 스킵
+    mockSignInWithOtp.mockResolvedValueOnce({
+      data: { session: { user: { id: 'user-123' } } },
+      error: null,
+    })
+
+    render(<PhoneInputScreen />)
+
+    fireEvent.changeText(screen.getByTestId('phone-input'), '010-1234-5678')
+    fireEvent.press(screen.getByTestId('submit-button'))
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith('RoleSelect')
     })
   })
 
