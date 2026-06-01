@@ -5,8 +5,8 @@ import type { AuthStackParamList } from './types'
 import { PhoneInputScreen } from '../screens/auth/PhoneInputScreen'
 import { OtpVerifyScreen } from '../screens/auth/OtpVerifyScreen'
 import { RoleSelectScreen } from '../screens/auth/RoleSelectScreen'
+import { NicknameInputScreen } from '../screens/auth/NicknameInputScreen'
 import { LocationVerifyScreen } from '../screens/auth/LocationVerifyScreen'
-
 import { MainNavigator } from './MainNavigator'
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>()
@@ -21,6 +21,7 @@ export function AppNavigator() {
       <AuthStack.Screen name="PhoneInput" component={PhoneInputScreen} />
       <AuthStack.Screen name="OtpVerify" component={OtpVerifyScreen} />
       <AuthStack.Screen name="RoleSelect" component={RoleSelectScreen} />
+      <AuthStack.Screen name="NicknameInput" component={NicknameInputScreen} />
       <AuthStack.Screen name="LocationVerify" component={LocationVerifyScreen} />
     </AuthStack.Navigator>
   )

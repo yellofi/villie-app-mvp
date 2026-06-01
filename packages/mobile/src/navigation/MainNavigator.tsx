@@ -1,11 +1,12 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
 import type { MainTabParamList } from './types'
-import { CareFeedScreen } from '../screens/feed/CareFeedScreen'
+import { FeedStackNavigator } from './FeedStackNavigator'
+import { CarePostScreen } from '../screens/post/CarePostScreen'
+import { useAuthStore } from '../store/auth.store'
 
-// Phase 1 placeholders — 추후 실제 화면으로 교체
-import { View } from 'react-native'
+// Placeholder 화면 — 추후 실제 화면으로 교체
 function Placeholder({ label }: { label: string }) {
   return (
     <View className="flex-1 items-center justify-center bg-white">
@@ -17,6 +18,8 @@ function Placeholder({ label }: { label: string }) {
 const Tab = createBottomTabNavigator<MainTabParamList>()
 
 export function MainNavigator() {
+  const userType = useAuthStore((s) => s.userType)
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -26,8 +29,8 @@ export function MainNavigator() {
         tabBarStyle: { borderTopColor: '#f3f4f6' },
         tabBarLabel: ({ color }) => {
           const labels: Record<string, string> = {
-            Feed: '피드',
-            NearSeniors: '주변 시터',
+            FeedTab: '피드',
+            PostTab: userType === 'PARENT' ? '요청 작성' : '지원 현황',
             Chat: '채팅',
             MyVillie: '내 빌리',
           }
@@ -39,8 +42,8 @@ export function MainNavigator() {
         },
         tabBarIcon: ({ color }) => {
           const icons: Record<string, string> = {
-            Feed: '🏠',
-            NearSeniors: '👴',
+            FeedTab: '🏠',
+            PostTab: userType === 'PARENT' ? '✏️' : '📋',
             Chat: '💬',
             MyVillie: '👤',
           }
@@ -48,8 +51,17 @@ export function MainNavigator() {
         },
       })}
     >
-      <Tab.Screen name="Feed" component={CareFeedScreen} />
-      <Tab.Screen name="NearSeniors" children={() => <Placeholder label="주변 시터" />} />
+      <Tab.Screen name="FeedTab" component={FeedStackNavigator} />
+      <Tab.Screen
+        name="PostTab"
+        children={() =>
+          userType === 'PARENT' ? (
+            <CarePostScreen />
+          ) : (
+            <Placeholder label="지원 현황" />
+          )
+        }
+      />
       <Tab.Screen name="Chat" children={() => <Placeholder label="채팅" />} />
       <Tab.Screen name="MyVillie" children={() => <Placeholder label="내 빌리" />} />
     </Tab.Navigator>
