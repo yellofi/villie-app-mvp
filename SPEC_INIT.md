@@ -266,6 +266,19 @@ GROUP BY chat_id;
 
 ---
 
+## 5-1. 기술 부채 / 미완료 TODO
+
+> 의도적으로 임시 처리한 항목. 유저 테스트 전 반드시 해소해야 함.
+
+| # | 항목 | 현재 상태 | 해야 할 일 | 우선순위 |
+|---|------|-----------|------------|----------|
+| TD-01 | SMS OTP 실제 발송 | Supabase `Enable phone confirmations` **OFF** — OTP 없이 즉시 인증됨 | Twilio 계정 생성 후 Account SID / Auth Token / Messaging Service SID 입력, 토글 ON으로 복원. `PhoneInputScreen`의 분기 로직도 원복 필요 | **유저 테스트 전 필수** |
+| TD-02 | 세션 영속성 | `persistSession: true`이지만 스토리지 어댑터 없음 — 앱 재시작 시 로그아웃됨 | `AsyncStorage` 설치 후 `supabase.ts`에 storage 어댑터 연결, `App.tsx`에 `onAuthStateChange` 리스너 추가 | **Supabase 연결 시 즉시** |
+| TD-03 | 동네 인증 | "건너뛰기" 버튼으로 임시 통과 | GPS → 법정동 코드(`b_code`) 추출 후 `user_locations` 테이블 upsert | 핵심 기능, 조기 구현 권장 |
+| TD-04 | 신규/재방문 유저 분기 | OTP 인증 후 항상 `RoleSelect`로 이동 | `users` 테이블 조회 → 프로필 있으면 피드로, 없으면 온보딩으로 분기 | **Supabase 연결 시 즉시** |
+
+---
+
 ## 6. 단계별 확장 시나리오 및 인프라 로드맵
 
 | Phase | 단계 | 내용 |

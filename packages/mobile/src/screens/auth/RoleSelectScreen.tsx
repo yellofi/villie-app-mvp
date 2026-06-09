@@ -16,7 +16,7 @@ export function RoleSelectScreen() {
   const handleConfirm = () => {
     if (!selected) return
     setUserType(selected)
-    navigation.navigate('LocationVerify')
+    navigation.navigate('NicknameInput')
   }
 
   return (

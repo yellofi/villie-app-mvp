@@ -51,13 +51,16 @@ const mockSetUserType = jest.fn()
 
 ;(useAuthStore as jest.MockedFunction<typeof useAuthStore>).mockReturnValue({
   phone: '010-1234-5678',
+  nickname: '',
   isAuthenticated: true,
   userId: 'user-1',
   userType: null,
   isLoading: false,
   error: null,
   setPhone: jest.fn(),
+  setNickname: jest.fn(),
   setUserType: mockSetUserType,
+  setAuthenticated: jest.fn(),
   reset: jest.fn(),
 } as any)
 
@@ -66,16 +69,18 @@ const mockSetUserType = jest.fn()
 // ---------------------------------------------------------------------------
 beforeEach(() => {
   jest.clearAllMocks()
-  // Re-apply the default mock after clearAllMocks resets call counts but not implementations
   ;(useAuthStore as jest.MockedFunction<typeof useAuthStore>).mockReturnValue({
     phone: '010-1234-5678',
+    nickname: '',
     isAuthenticated: true,
     userId: 'user-1',
     userType: null,
     isLoading: false,
     error: null,
     setPhone: jest.fn(),
+    setNickname: jest.fn(),
     setUserType: mockSetUserType,
+    setAuthenticated: jest.fn(),
     reset: jest.fn(),
   } as any)
 })

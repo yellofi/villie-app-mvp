@@ -5,30 +5,23 @@ import type { AuthStackParamList } from './types'
 import { PhoneInputScreen } from '../screens/auth/PhoneInputScreen'
 import { OtpVerifyScreen } from '../screens/auth/OtpVerifyScreen'
 import { RoleSelectScreen } from '../screens/auth/RoleSelectScreen'
+import { NicknameInputScreen } from '../screens/auth/NicknameInputScreen'
 import { LocationVerifyScreen } from '../screens/auth/LocationVerifyScreen'
-
-// Placeholder for main tab navigator (Phase 2)
-import { View, Text } from 'react-native'
-function MainPlaceholder() {
-  return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text className="text-lg font-semibold">메인 앱 (준비 중)</Text>
-    </View>
-  )
-}
+import { MainNavigator } from './MainNavigator'
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>()
 
 export function AppNavigator() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
 
-  if (isAuthenticated) return <MainPlaceholder />
+  if (isAuthenticated) return <MainNavigator />
 
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen name="PhoneInput" component={PhoneInputScreen} />
       <AuthStack.Screen name="OtpVerify" component={OtpVerifyScreen} />
       <AuthStack.Screen name="RoleSelect" component={RoleSelectScreen} />
+      <AuthStack.Screen name="NicknameInput" component={NicknameInputScreen} />
       <AuthStack.Screen name="LocationVerify" component={LocationVerifyScreen} />
     </AuthStack.Navigator>
   )

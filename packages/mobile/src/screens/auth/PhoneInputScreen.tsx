@@ -21,7 +21,7 @@ export function PhoneInputScreen() {
     setIsLoading(true)
     setError(null)
 
-    const { error: otpError } = await supabase.auth.signInWithOtp({
+    const { data, error: otpError } = await supabase.auth.signInWithOtp({
       phone: normalizePhone(phone),
     })
 
@@ -29,6 +29,15 @@ export function PhoneInputScreen() {
 
     if (otpError) {
       setError(otpError.message)
+      return
+    }
+
+    // Enable phone confirmations = OFF (TD-01):
+    //   signInWithOtp가 즉시 세션을 반환 → OTP 화면 스킵
+    // Enable phone confirmations = ON (Twilio 연결 후):
+    //   data.session이 null → OTP 입력 화면으로 이동
+    if (data?.session) {
+      navigation.navigate('RoleSelect')
       return
     }
 
