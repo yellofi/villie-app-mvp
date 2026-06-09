@@ -72,7 +72,7 @@ export function LocationVerifyScreen() {
         testID="skip-button"
         onPress={handleSkip}
         disabled={isLoading}
-        className={`py-4 w-full rounded-xl items-center ${isLoading ? 'bg-gray-200' : 'bg-emerald-500'}`}
+        className={`py-4 w-full rounded-xl items-center ${isLoading ? 'bg-gray-200' : 'bg-orange-500'}`}
       >
         {isLoading ? (
           <ActivityIndicator color="#6b7280" />

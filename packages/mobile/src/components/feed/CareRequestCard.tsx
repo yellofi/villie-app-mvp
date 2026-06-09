@@ -8,58 +8,80 @@ interface Props {
   onPress: (request: CareRequest) => void
 }
 
+const AGE_ICON: Record<string, string> = {
+  INFANT: '👶',
+  TODDLER: '🧒',
+  ELEMENTARY: '📚',
+}
+
 export function CareRequestCard({ request, onPress }: Props) {
   const {
     title,
     target_age,
     hourly_wage,
     schedule_time,
+    tasks,
     is_urgent,
+    status,
     distance_meters,
   } = request
 
-  const formattedWage = `시급 ${hourly_wage.toLocaleString('ko-KR')}원`
   const ageLabel = TARGET_AGE_LABEL[target_age]
   const distanceLabel = distance_meters != null ? formatDistance(distance_meters) : null
+  const isRecruiting = status === 'RECRUITING'
 
   return (
     <TouchableOpacity
       testID="care-request-card"
       onPress={() => onPress(request)}
-      className="bg-white rounded-2xl border border-gray-100 p-4 mb-3 shadow-sm"
+      className={`bg-white p-4 mb-2 border-b border-gray-100 ${!isRecruiting ? 'opacity-50' : ''}`}
       activeOpacity={0.7}
     >
-      {/* 상단: 급구 뱃지 + 거리 */}
-      <View className="flex-row items-center justify-between mb-2">
-        <View className="flex-row items-center gap-2">
-          {is_urgent && (
-            <View className="bg-red-50 rounded-full px-2 py-0.5">
-              <Text className="text-red-500 text-xs font-semibold">🚨 급구</Text>
-            </View>
-          )}
-          <View className="bg-emerald-50 rounded-full px-2 py-0.5">
-            <Text className="text-emerald-700 text-xs font-medium">{ageLabel}</Text>
-          </View>
+      {/* 상단: 제목 + 모집 상태 뱃지 */}
+      <View className="flex-row items-start justify-between mb-1.5">
+        <Text className="text-sm font-bold text-gray-900 flex-1 mr-2" numberOfLines={2}>
+          {is_urgent ? '🚨 ' : ''}{title}
+        </Text>
+        <View className={`px-2 py-0.5 rounded flex-shrink-0 ${isRecruiting ? 'bg-orange-100' : 'bg-gray-200'}`}>
+          <Text className={`text-xs font-bold ${isRecruiting ? 'text-orange-600' : 'text-gray-500'}`}>
+            {isRecruiting ? '모집중' : '매칭완료'}
+          </Text>
         </View>
-        {distanceLabel != null && (
-          <Text className="text-gray-400 text-xs">{distanceLabel}</Text>
-        )}
       </View>
 
-      {/* 제목 */}
-      <Text className="text-base font-semibold text-gray-900 mb-2" numberOfLines={2}>
-        {title}
+      {/* 동네 · 시간 · 거리 */}
+      <Text className="text-xs text-gray-400 mb-2.5">
+        {distanceLabel ? `${distanceLabel} 거리 · ` : ''}{schedule_time}
       </Text>
 
-      {/* 하단: 시급 + 일정 태그 */}
-      <View className="flex-row items-center gap-2 flex-wrap">
-        <View className="bg-gray-100 rounded-lg px-3 py-1">
-          <Text className="text-gray-700 text-sm font-medium">{formattedWage}</Text>
+      {/* 태그: 연령대, 시급 */}
+      <View className="flex-row flex-wrap gap-1.5 mb-3">
+        <View className="px-2 py-1 bg-gray-100 rounded-full">
+          <Text className="text-xs text-gray-600">
+            {AGE_ICON[target_age]} {ageLabel}
+          </Text>
         </View>
-        <View className="bg-gray-100 rounded-lg px-3 py-1">
-          <Text className="text-gray-700 text-sm">{schedule_time}</Text>
+        <View className="px-2 py-1 bg-orange-50 rounded-full">
+          <Text className="text-xs text-orange-700 font-semibold">
+            시급 {hourly_wage.toLocaleString('ko-KR')}원
+          </Text>
         </View>
       </View>
+
+      {/* 업무 범위 */}
+      {tasks.length > 0 && (
+        <View className="bg-gray-50 p-2.5 rounded-lg">
+          <Text className="text-xs font-bold text-gray-600 mb-1">업무 범위</Text>
+          {tasks.slice(0, 3).map((task) => (
+            <Text key={task} className="text-xs text-gray-500">
+              ✓ {task}
+            </Text>
+          ))}
+          {tasks.length > 3 && (
+            <Text className="text-xs text-gray-400 mt-0.5">+{tasks.length - 3}개 더</Text>
+          )}
+        </View>
+      )}
     </TouchableOpacity>
   )
 }

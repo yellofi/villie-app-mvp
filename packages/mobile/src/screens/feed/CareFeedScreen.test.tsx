@@ -25,6 +25,10 @@ jest.mock('../../lib/supabase', () => ({
   supabase: { from: jest.fn(), rpc: jest.fn(), auth: { getSession: jest.fn() } },
 }))
 
+jest.mock('../../store/auth.store', () => ({
+  useAuthStore: jest.fn(() => ({ userType: 'SENIOR' })),
+}))
+
 // useQuery를 직접 mock — 비동기 타이밍 이슈 없이 동기적으로 상태 제어
 jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
@@ -85,9 +89,9 @@ beforeEach(() => {
 // ─── Tests ───────────────────────────────────────────────────────────────────
 
 describe('CareFeedScreen', () => {
-  it('헤더 "빌리 피드" 텍스트를 렌더한다', () => {
+  it('헤더에 동네명을 렌더한다', () => {
     render(<CareFeedScreen />)
-    expect(screen.getByText('빌리 피드')).toBeTruthy()
+    expect(screen.getByText('서초4동')).toBeTruthy()
   })
 
   it('로딩 완료 후 카드들을 렌더한다', () => {

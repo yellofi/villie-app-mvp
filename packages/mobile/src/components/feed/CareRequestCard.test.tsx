@@ -80,7 +80,7 @@ describe('CareRequestCard', () => {
         onPress={() => {}}
       />,
     )
-    expect(screen.getByText('도보 5분')).toBeTruthy()
+    expect(screen.getByText(/도보 5분/)).toBeTruthy()
   })
 
   it('distance_meters가 없으면 거리를 렌더하지 않는다', () => {

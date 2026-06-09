@@ -70,7 +70,7 @@ export function CareDetailScreen() {
   if (isLoading || !request) {
     return (
       <SafeAreaView className="flex-1 bg-white items-center justify-center">
-        <ActivityIndicator color="#10b981" />
+        <ActivityIndicator color="#f97316" />
       </SafeAreaView>
     )
   }
@@ -103,8 +103,8 @@ export function CareDetailScreen() {
                 <Text className="text-red-600 text-xs font-bold">🚨 급구</Text>
               </View>
             )}
-            <View className="bg-emerald-50 px-3 py-1 rounded-full">
-              <Text className="text-emerald-700 text-xs font-semibold">
+            <View className="bg-orange-50 px-3 py-1 rounded-full">
+              <Text className="text-orange-700 text-xs font-semibold">
                 {AGE_EMOJI[request.target_age]} {TARGET_AGE_LABEL[request.target_age]}
               </Text>
             </View>
@@ -118,9 +118,9 @@ export function CareDetailScreen() {
           </View>
 
           {/* 시급 */}
-          <View className="bg-emerald-50 rounded-2xl p-5 mb-5">
-            <Text className="text-sm text-emerald-700 font-medium mb-1">시급</Text>
-            <Text testID="hourly-wage" className="text-3xl font-bold text-emerald-600">
+          <View className="bg-orange-50 rounded-2xl p-5 mb-5">
+            <Text className="text-sm text-orange-700 font-medium mb-1">시급</Text>
+            <Text testID="hourly-wage" className="text-3xl font-bold text-orange-600">
               {request.hourly_wage.toLocaleString()}원
             </Text>
           </View>
@@ -174,7 +174,7 @@ export function CareDetailScreen() {
               testID="apply-button"
               onPress={() => apply()}
               disabled={isApplying}
-              className={`py-4 rounded-xl items-center ${isApplying ? 'bg-gray-200' : 'bg-emerald-500'}`}
+              className={`py-4 rounded-xl items-center ${isApplying ? 'bg-gray-200' : 'bg-orange-500'}`}
             >
               {isApplying ? (
                 <ActivityIndicator color="#6b7280" />

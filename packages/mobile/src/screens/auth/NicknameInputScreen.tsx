@@ -63,7 +63,7 @@ export function NicknameInputScreen() {
           testID="next-button"
           onPress={handleNext}
           disabled={!isValid}
-          className={`py-4 rounded-xl items-center ${isValid ? 'bg-emerald-500' : 'bg-gray-200'}`}
+          className={`py-4 rounded-xl items-center ${isValid ? 'bg-orange-500' : 'bg-gray-200'}`}
           accessibilityState={{ disabled: !isValid }}
         >
           <Text

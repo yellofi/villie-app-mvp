@@ -11,6 +11,8 @@ export type AuthStackParamList = {
 export type FeedStackParamList = {
   CareFeed: undefined
   CareDetail: { requestId: string }
+  SeniorProfile: { seniorId: string }
+  Review: { requestId: string; seniorId: string; seniorName: string }
 }
 
 // ─── 포스트 스택 (요청 탭 내부, 부모 전용) ─────────

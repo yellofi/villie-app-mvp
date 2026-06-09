@@ -33,7 +33,7 @@ export function RoleSelectScreen() {
         testID="role-parent"
         onPress={() => setSelected('PARENT')}
         className={`border-2 rounded-2xl p-6 mb-4 ${
-          selected === 'PARENT' ? 'border-emerald-500 bg-emerald-50' : 'border-gray-200'
+          selected === 'PARENT' ? 'border-orange-500 bg-orange-50' : 'border-gray-200'
         }`}
       >
         <Text className="text-lg font-semibold text-gray-900">부모님</Text>
@@ -45,7 +45,7 @@ export function RoleSelectScreen() {
         testID="role-senior"
         onPress={() => setSelected('SENIOR')}
         className={`border-2 rounded-2xl p-6 mb-8 ${
-          selected === 'SENIOR' ? 'border-emerald-500 bg-emerald-50' : 'border-gray-200'
+          selected === 'SENIOR' ? 'border-orange-500 bg-orange-50' : 'border-gray-200'
         }`}
       >
         <Text className="text-lg font-semibold text-gray-900">시니어 시터</Text>
@@ -56,7 +56,7 @@ export function RoleSelectScreen() {
         testID="confirm-button"
         onPress={handleConfirm}
         disabled={selected === null}
-        className={`py-4 rounded-xl items-center ${selected ? 'bg-emerald-500' : 'bg-gray-200'}`}
+        className={`py-4 rounded-xl items-center ${selected ? 'bg-orange-500' : 'bg-gray-200'}`}
         accessibilityState={{ disabled: selected === null }}
       >
         <Text className={`font-semibold text-base ${selected ? 'text-white' : 'text-gray-400'}`}>

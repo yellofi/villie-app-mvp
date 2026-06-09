@@ -5,6 +5,7 @@
  *   - 초기 상태에서 submit 버튼 비활성화
  *   - 필수 항목 모두 입력 시 submit 버튼 활성화
  *   - 대상 연령 버튼 선택
+ *   - 요일 버튼 토글
  *   - 업무 범위 태그 토글
  *   - 급구 스위치 렌더
  *   - 유효한 폼 submit 시 mutate 호출
@@ -46,14 +47,16 @@ const mockUseMutation = useMutation as jest.Mock
 const mockUseAuthStore = useAuthStore as jest.Mock
 const mockMutate = jest.fn()
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+// ─── Helper ──────────────────────────────────────────────────────────────────
 
-/** 필수 항목 5개를 모두 채우는 헬퍼 */
+/** 필수 항목 모두 채우기 */
 function fillAllRequiredFields() {
-  fireEvent.changeText(screen.getByTestId('title-input'), '오늘 오후 하원 시터 구해요')
+  fireEvent.changeText(screen.getByTestId('title-input'), '3살 여아 하원 및 저녁 돌봄')
   fireEvent.press(screen.getByTestId('age-TODDLER'))
+  fireEvent.press(screen.getByTestId('day-월'))
+  fireEvent.changeText(screen.getByTestId('start-time'), '16:00')
+  fireEvent.changeText(screen.getByTestId('end-time'), '19:00')
   fireEvent.changeText(screen.getByTestId('wage-input'), '15000')
-  fireEvent.changeText(screen.getByTestId('schedule-input'), '오늘 15:00~19:00')
   fireEvent.press(screen.getByTestId('task-하원'))
 }
 
@@ -86,11 +89,17 @@ describe('CarePostScreen', () => {
     expect(screen.getByTestId('age-ELEMENTARY')).toBeTruthy()
   })
 
+  it('요일 버튼 7개가 모두 렌더된다', () => {
+    render(<CarePostScreen />)
+    ;['월', '화', '수', '목', '금', '토', '일'].forEach((day) => {
+      expect(screen.getByTestId(`day-${day}`)).toBeTruthy()
+    })
+  })
+
   it('업무 범위 태그를 선택할 수 있다', () => {
     render(<CarePostScreen />)
-    const taskBtn = screen.getByTestId('task-하원')
-    fireEvent.press(taskBtn)
-    expect(taskBtn).toBeTruthy()
+    fireEvent.press(screen.getByTestId('task-하원'))
+    expect(screen.getByTestId('task-하원')).toBeTruthy()
   })
 
   it('급구 스위치가 렌더된다', () => {

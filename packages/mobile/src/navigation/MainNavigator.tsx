@@ -24,7 +24,7 @@ export function MainNavigator() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarActiveTintColor: '#10b981',   // emerald-500
+        tabBarActiveTintColor: '#f97316',   // orange-500
         tabBarInactiveTintColor: '#9ca3af', // gray-400
         tabBarStyle: { borderTopColor: '#f3f4f6' },
         tabBarLabel: ({ color }) => {

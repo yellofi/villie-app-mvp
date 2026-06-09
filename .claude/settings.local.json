@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"D:\\\\yshwang\\\\workplace\\\\villie-app\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where python *)",
+      "Bash(where python3 *)",
+      "Bash(where node *)",
+      "Bash(python -c \"import http.server\")",
+      "Bash(where node.exe)",
+      "Bash(where npm.cmd)",
+      "Bash(where npx.cmd)",
+      "Bash(where python3.exe)",
+      "Bash(where php.exe)",
+      "Bash(python3 -c \"import sys; print\\(sys.version\\)\")",
+      "Bash(gh auth *)",
+      "Bash(gh api *)",
+      "Bash(wsl gh *)",
+      "mcp__46af8f2d-0059-4b72-98e0-9d9b18abe13d__get_thread",
+      "mcp__46af8f2d-0059-4b72-98e0-9d9b18abe13d__search_threads"
+    ]
+  }
+}

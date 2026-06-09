@@ -15,11 +15,16 @@ import type { CareRequest } from '@villie/shared'
 import type { FeedStackParamList } from '../../navigation/types'
 import { CareRequestCard } from '../../components/feed/CareRequestCard'
 import { getFeed } from '../../services/care.service'
+import { useAuthStore } from '../../store/auth.store'
 
 type NavProp = NativeStackNavigationProp<FeedStackParamList, 'CareFeed'>
 
+// TODO(TD-03): 실제 GPS 인증 후 user_locations에서 읽어온 동네명으로 교체
+const MOCK_DONG = '서초4동'
+
 export function CareFeedScreen() {
   const navigation = useNavigation<NavProp>()
+  const userType = useAuthStore((s) => s.userType)
 
   const {
     data: requests = [],
@@ -39,7 +44,7 @@ export function CareFeedScreen() {
   if (isLoading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
-        <ActivityIndicator testID="loading-indicator" color="#10b981" />
+        <ActivityIndicator testID="loading-indicator" color="#f97316" />
       </SafeAreaView>
     )
   }
@@ -52,7 +57,7 @@ export function CareFeedScreen() {
         </Text>
         <TouchableOpacity
           onPress={() => refetch()}
-          className="bg-emerald-500 px-6 py-3 rounded-xl"
+          className="bg-orange-500 px-6 py-3 rounded-xl"
         >
           <Text className="text-white font-semibold">다시 시도</Text>
         </TouchableOpacity>
@@ -62,10 +67,16 @@ export function CareFeedScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
-      {/* 헤더 */}
-      <View className="bg-white px-5 py-4 border-b border-gray-100">
-        <Text className="text-xl font-bold text-gray-900">빌리 피드</Text>
-        <Text className="text-sm text-gray-500 mt-0.5">내 주변 돌봄 요청</Text>
+      {/* 헤더 — 모크업 스타일 */}
+      <View className="bg-white px-4 py-3 border-b border-gray-100 flex-row items-center justify-between">
+        <View className="flex-row items-center gap-1.5">
+          <Text className="text-base font-bold text-gray-900">{MOCK_DONG}</Text>
+          <Text className="text-gray-400 text-xs">▾</Text>
+        </View>
+        <View className="flex-row gap-5">
+          <Text className="text-lg text-gray-500">🔍</Text>
+          <Text className="text-lg text-gray-500">🔔</Text>
+        </View>
       </View>
 
       {/* 피드 목록 */}
@@ -75,13 +86,13 @@ export function CareFeedScreen() {
         renderItem={({ item }) => (
           <CareRequestCard request={item} onPress={handleCardPress} />
         )}
-        contentContainerStyle={{ padding: 16 }}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={requests.length === 0 ? { flex: 1 } : { paddingBottom: 80 }}
         refreshControl={
           <RefreshControl
             refreshing={isRefetching}
             onRefresh={() => refetch()}
-            tintColor="#10b981"
+            tintColor="#f97316"
           />
         }
         ListEmptyComponent={
@@ -96,6 +107,17 @@ export function CareFeedScreen() {
           </View>
         }
       />
+
+      {/* FAB — PARENT만 표시 */}
+      {userType === 'PARENT' && (
+        <TouchableOpacity
+          testID="fab-button"
+          onPress={() => navigation.getParent()?.navigate('PostTab')}
+          className="absolute bottom-6 right-4 w-12 h-12 bg-orange-500 rounded-full shadow-lg items-center justify-center"
+        >
+          <Text className="text-white text-xl">✏️</Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   )
 }

@@ -73,7 +73,7 @@ export function PhoneInputScreen() {
         testID="submit-button"
         onPress={handleSubmit}
         disabled={!valid || isLoading}
-        className={`py-4 rounded-xl items-center mt-2 ${valid ? 'bg-emerald-500' : 'bg-gray-200'}`}
+        className={`py-4 rounded-xl items-center mt-2 ${valid ? 'bg-orange-500' : 'bg-gray-200'}`}
         accessibilityState={{ disabled: !valid || isLoading }}
       >
         {isLoading ? (
